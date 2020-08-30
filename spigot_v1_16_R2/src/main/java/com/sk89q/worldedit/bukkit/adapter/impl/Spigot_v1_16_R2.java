@@ -202,7 +202,7 @@ public final class Spigot_v1_16_R2 implements BukkitImplAdapter {
         CraftServer.class.cast(Bukkit.getServer());
 
 
-        if (getDataVersion() != 2578) throw new UnsupportedClassVersionError("Not 1.16.2!");
+        if (CraftMagicNumbers.INSTANCE.getDataVersion() != 2578) throw new UnsupportedClassVersionError("Not 1.16.2!");
 
         // The list of tags on an NBTTagList
         nbtListTagListField = NBTTagList.class.getDeclaredField("list");
@@ -218,7 +218,7 @@ public final class Spigot_v1_16_R2 implements BukkitImplAdapter {
         chunkProviderExecutorField = ChunkProviderServer.class.getDeclaredField("serverThreadQueue");
         chunkProviderExecutorField.setAccessible(true);
 
-        new DataConverters_1_16_R2(getDataVersion(), this).build(ForkJoinPool.commonPool());
+        new DataConverters_1_16_R2(CraftMagicNumbers.INSTANCE.getDataVersion(), this).build(ForkJoinPool.commonPool());
 
         Watchdog watchdog;
         try {
@@ -237,11 +237,6 @@ public final class Spigot_v1_16_R2 implements BukkitImplAdapter {
             Class.forName("org.spigotmc.SpigotConfig");
             SpigotConfig.config.set("world-settings.worldeditregentempworld.verbose", false);
         } catch (ClassNotFoundException ignored) {}
-    }
-
-    @Override
-    public int getDataVersion() {
-        return CraftMagicNumbers.INSTANCE.getDataVersion();
     }
 
     @Override
